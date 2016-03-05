@@ -17,7 +17,7 @@ class CatchRatioDictionary:
         return self.__dict
 
     def saveDictionaryToFile(self):
-        with open("catchRatioDictionary.p",'wb') as fp:
+        with open("dataDictionary.p",'wb') as fp:
             pickle.dump(self.__dict,fp)
 
 
