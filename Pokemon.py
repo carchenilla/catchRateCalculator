@@ -1,4 +1,4 @@
-class Pokemon:
+class Pokemon:          #Pokemon class to store Pokemon data
     def __init__(self,num,name,ratio):
         self.__name=name
         self.__number=num
