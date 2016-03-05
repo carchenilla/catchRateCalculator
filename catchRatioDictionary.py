@@ -1,22 +1,22 @@
-from bs4 import BeautifulSoup
-import pickle
-from Pokemon import Pokemon
+from bs4 import BeautifulSoup       #BeautifulSoup to navigate in the HTML file
+import pickle                       #Pickle to store de dictionary of pokemon
+from Pokemon import Pokemon         #Pokemon class, obviously
 
 class CatchRatioDictionary:
 
-    def __init__(self,path,mode=None):
+    def __init__(self,path,mode=None):      #mode parameter to check if we load from html or file
         if mode==None:
             self.__dict=self.__loadDictionaryFromFile(path)
         else:
             self.__dict=self.__getListfromHtml(path)
 
-    def getPokemonByName(self,name):
+    def getPokemonByName(self,name):        #get pokemon by name
         return self.__dict.get(name)
 
-    def getPokemonDictionary(self):
+    def getPokemonDictionary(self):         #get actual dictionary (should it be private?)
         return self.__dict
 
-    def saveDictionaryToFile(self):
+    def saveDictionaryToFile(self):             #save dictionary to file, just in case
         with open("dataDictionary.p",'wb') as fp:
             pickle.dump(self.__dict,fp)
 
@@ -42,6 +42,7 @@ class CatchRatioDictionary:
 
 
 
-if __name__=="__main__":
+if __name__=="__main__":        #auxiliar main to store dictionary to file
     d = CatchRatioDictionary("webpage","html")
+    d.saveDictionaryToFile()
     print(len(d.getPokemonDictionary()))
