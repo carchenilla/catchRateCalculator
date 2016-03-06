@@ -5,11 +5,11 @@ from pokemon import Pokemon         #Pokemon class, obviously
 
 class CatchRatioDictionary:
 
-    def __init__(self,path=None):      #mode parameter to check if we load from html or file
+    def __init__(self,path=None):      #path parameter to check if we load from html or file
         if path!=None:
             self.__dict=self.__loadDictionaryFromFile(path)
         else:
-            self.__dict=self.__getListfromHtml()
+            self.__dict=self.__getDictionaryfromHtml()
 
     def getPokemonByName(self,name):        #get pokemon by name
         return self.__dict.get(name)
@@ -22,7 +22,7 @@ class CatchRatioDictionary:
             pickle.dump(self.__dict,fp)
 
 
-    def __getListfromHtml(self):
+    def __getDictionaryfromHtml(self):
         print("Creating data from scratch")
         print("It may take a while depending on your web connection")
         print("Go watch some animus or anything")
