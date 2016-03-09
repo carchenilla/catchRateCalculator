@@ -2,7 +2,7 @@
 
 Pues eso, es una pequeña app en python con GUI para calcular la probabilidad de captura de un Pokemon.
 
-Para su funcionamiento es necesario tener instalado PyQt4, debido a la interfaz gráfica de la aplicación.
+Para su funcionamiento es necesario tener instalado PyQt4, debido a la interfaz gráfica de la aplicación, y BeautifulSoup4, para realizar scraping a la hora de cargar los datos de los pokemon.
 
 Los contenidos del proyecto son: 
 
