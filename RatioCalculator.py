@@ -1,4 +1,3 @@
-from PyQt4 import QtGui
 from calculatorGUI import *
 from PokemonDictionary import *
 import math
