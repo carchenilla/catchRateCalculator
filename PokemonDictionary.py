@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup       #BeautifulSoup
 from urllib.request import urlopen  #to open urls
 import pickle                       #Pickle to store de dictionary of pokemon
-from pokemon import Pokemon         #Pokemon class, obviously
+from Pokemon import Pokemon         #Pokemon class, obviously
 
 class CatchRatioDictionary:
 
@@ -85,9 +85,12 @@ class CatchRatioDictionary:
 
 
 if __name__=="__main__":        #auxiliar main to store dictionary to file
-    #d = CatchRatioDictionary("dataDictionary")
-    d = CatchRatioDictionary()
-    d.saveDictionaryToFile()
-    print(len(d.getPokemonDictionary()))
-    #for p in d.getPokemonDictionary().values():
-    #    print(p.toString())
+    d = CatchRatioDictionary("dataDictionary")
+    #d = CatchRatioDictionary()
+    #d.saveDictionaryToFile()
+    #print(len(d.getPokemonDictionary()))
+    for p in d.getPokemonDictionary().values():
+        print(p.toString())
+    print()
+    poke = d.getPokemonByName("Mantyke")
+    print(str(poke.getBaseHP()))
