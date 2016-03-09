@@ -107,7 +107,7 @@ class MiCalculadora(QtGui.QDialog):
 
 
 if __name__=="__main__":
-    d = CatchRatioDictionary("dataDictionary")
+    d = PokemonDictionary("dataDictionary")
     app = QtGui.QApplication(sys.argv)
     myapp = MiCalculadora()
     myapp.show()

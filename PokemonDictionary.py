@@ -3,7 +3,7 @@ from urllib.request import urlopen  #to open urls
 import pickle                       #Pickle to store de dictionary of pokemon
 from Pokemon import Pokemon         #Pokemon class, obviously
 
-class CatchRatioDictionary:
+class PokemonDictionary:
 
     def __init__(self,path=None):      #path parameter to check if we load from html or file
         if path!=None:
@@ -85,7 +85,7 @@ class CatchRatioDictionary:
 
 
 if __name__=="__main__":        #auxiliar main to store dictionary to file
-    d = CatchRatioDictionary("dataDictionary")
+    d = PokemonDictionary("dataDictionary")
     #d = CatchRatioDictionary()
     #d.saveDictionaryToFile()
     #print(len(d.getPokemonDictionary()))
