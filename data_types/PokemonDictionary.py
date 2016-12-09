@@ -1,7 +1,8 @@
-from bs4 import BeautifulSoup       #BeautifulSoup
-from urllib.request import urlopen  #to open urls
 import pickle                       #Pickle to store de dictionary of pokemon
-from Pokemon import Pokemon         #Pokemon class, obviously
+from urllib.request import urlopen  #to open urls
+from bs4 import BeautifulSoup       #BeautifulSoup
+from data_types.Pokemon import Pokemon         #Pokemon class, obviously
+
 
 class PokemonDictionary:
 
@@ -21,11 +22,17 @@ class PokemonDictionary:
         with open("dataDictionary.p",'wb') as fp:
             pickle.dump(self.__dict,fp)
 
+    def __loadDictionaryFromFile(self, path):
+        try:
+            return (pickle.load(open(path + ".p", "rb")))
+        except IOError as err:
+            print("Problem while loading file - " + str(err))
+        except pickle.PickleError as err:
+            print("Problem with pickle - " + str(err))
 
     def __getDictionaryfromHtml(self):
         print("Creating data from scratch")
-        print("It may take a while depending on your web connection")
-        print("Go watch some animus or anything")
+        print("It may take a while, go watch some animus or anything")
         print()
         counter = 0
 
@@ -64,31 +71,21 @@ class PokemonDictionary:
 
             print("Found base HP of pokemon "+name+". Creating data and adding to dictionary")
             counter+=1
-            print(str("%.2f" % (100*counter/721))+"% completed")
+            print(str("%.2f" % (100*counter/802))+"% completed")
             print()
 
             poke = Pokemon(num,name,ratio,hp)       #create pokemon object
             pokemonDictionary[poke.getName()]=poke      #add pokemon to dictionary
 
         print("All Pokemon data were added. Done!")
-        return(pokemonDictionary)
-
-
-    def __loadDictionaryFromFile(self,path):
-        try:
-            return(pickle.load(open(path+".p","rb")))
-        except IOError as err:
-            print("Problem while loading file - "+str(err))
-        except pickle.PickleError as err:
-            print("Problem with pickle - "+str(err))
+        return pokemonDictionary
 
 
 
 if __name__=="__main__":        #auxiliar main to store dictionary to file
-    d = PokemonDictionary("dataDictionary")
-    #d = CatchRatioDictionary()
-    #d.saveDictionaryToFile()
-    #print(len(d.getPokemonDictionary()))
+    d = PokemonDictionary()
+    d.saveDictionaryToFile()
+    print(len(d.getPokemonDictionary()))
     for p in d.getPokemonDictionary().values():
         print(p.toString())
     print()

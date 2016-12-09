@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/catchRateCalculator.iml" filepath="$PROJECT_DIR$/.idea/catchRateCalculator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../chapter5/.idea/chapter5.iml" filepath="$PROJECT_DIR$/../chapter5/.idea/chapter5.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../chapter6/.idea/chapter6.iml" filepath="$PROJECT_DIR$/../chapter6/.idea/chapter6.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../neo4j/.idea/neo4j.iml" filepath="$PROJECT_DIR$/../neo4j/.idea/neo4j.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../TFG-informatica/.idea/TFG-informatica.iml" filepath="$PROJECT_DIR$/../TFG-informatica/.idea/TFG-informatica.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/catchRatioCalculator.iml" filepath="$PROJECT_DIR$/.idea/catchRatioCalculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../componentPriceTracker/.idea/componentPriceTracker.iml" filepath="$PROJECT_DIR$/../componentPriceTracker/.idea/componentPriceTracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gui_test/.idea/gui_test.iml" filepath="$PROJECT_DIR$/../gui_test/.idea/gui_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pruebaDelRuso/.idea/pruebaDelRuso.iml" filepath="$PROJECT_DIR$/../pruebaDelRuso/.idea/pruebaDelRuso.iml" />
     </modules>
   </component>
 </project>

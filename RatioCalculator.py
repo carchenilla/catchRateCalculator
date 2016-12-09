@@ -1,68 +1,77 @@
-from calculatorGUI import *
-from PokemonDictionary import *
-import math
-import sys
+import math, sys
+from GUI_files.calculatorGUI import *
+from data_types.PokemonDictionary import *
 
-ballRatios = {"Great Ball": 1.5, "Ultra Ball": 2, "Master Ball":99999, "Dive Ball": 3.5, "Repeat Ball": 3,
-              "Net Ball": 3, "Nest Ball": -1, "Timer Ball": 4, "Quick Ball": 5, "Dusk Ball": 3.5}
+ballRatios = {"Super Ball": 1.5, "Ultra Ball": 2, "Master Ball":99999, "Ocaso Ball": 3.5}
 
-statusRatios = {"Asleep": 2.5, "Frozen": 2.5, "None": 1}
-
-powerRatios = [1,1.5,2,2.5,2.5,2.5]
+statusRatios = {"Dormido": 2, "Congelado": 2, "Ninguno": 1}
 
 caughtRatios = [0.5,1,1.5,2,2.5]
 
-
 class MiCalculadora(QtGui.QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, dict, parent=None):
+        self.d = dict
         QtGui.QWidget.__init__(self,parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        QtCore.QObject.connect(self.ui.okButton, QtCore.SIGNAL('clicked()'), self.calculateRatio)
+        names = sorted([str(p.getName()) for p in self.d.getPokemonDictionary().values()])
+        self.ui.pokemon_Name_box.addItems(names)
+        QtCore.QObject.connect(self.ui.calculateButton, QtCore.SIGNAL("clicked()"), self.calculateRatio)
+
 
     def calculateRatio(self):
         try:
-            poke = d.getPokemonByName(str(self.ui.pokemonLine.text().rstrip()))
-            level = int(self.ui.levelLine.text())
-            hpPerc = int(self.ui.hpLeftLine.text())
-            caught = int(self.ui.caughtLine.text())
-            ball = self.ui.ballBox.currentText().replace("é","e")
-            status = self.ui.statusBox.currentText()
-            opower = self.ui.opowerBox.currentIndex()
+            poke = self.d.getPokemonByName(str(self.ui.pokemon_Name_box.currentText()))
+            level = int(self.ui.level_edit.text())
+            hpPerc = int(self.ui.hp_edit.text())
+            caught = int(self.ui.captured_edit.text())
+            ball = self.ui.ball_box.currentText().replace("é","e")
+            status = self.ui.status_box.currentText()
 
             if level>100:
                 level=100
-            if level<=0:
+            elif level<=0:
                 level=1
 
 
             if hpPerc>100:
                 hpPerc=100
-            if hpPerc<=0:
+            elif hpPerc<=0:
                 hpPerc=1
 
-            pixmap = QtGui.QPixmap("images/minisprites/"+str(poke.getNumber())+".png")
-            self.ui.spriteLabel.setPixmap(pixmap)
-            self.ui.spriteLabel.setMask(pixmap.mask())
+            if caught>802:
+                caught = 802
+            elif caught<0:
+                caught = 0
 
 
+            try:
+                pixmap = QtGui.QPixmap("images/minisprites/"+str(poke.getNumber())+".png")
+                self.ui.spriteLabel.setPixmap(pixmap)
+                self.ui.spriteLabel.setMask(pixmap.mask())
+            except IOError as err:
+                self.ui.textBrowser.append("Cannot load sprite for "+str(poke.getName()))
 
             fullHP = math.floor(((int(poke.getBaseHP())*2+31)*level)/100+level+10)
 
             curHP = math.floor(fullHP*hpPerc/100)
 
-            ballMod = ballRatios.get(ball)
-            if ballMod==None:
-                ballMod=1
-            elif ballMod==-1:
-                aux = [1,math.floor((41-level)/10)]
-                ballMod=max(aux)
+
+            if ball=="Nido Ball":
+                ballMod = max([1, 8-0.2*(level-1)])
+            elif ball=="Beast Ball":
+                if (str(poke.getName())) in ["Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord"]:
+                    ballMod = 5
+                else:
+                    ballMod = 0.1
+            else:
+                ballMod = ballRatios.get(ball)
+                if ballMod == None:
+                    ballMod = 1
 
             statMod = statusRatios.get(status)
             if statMod==None:
                 statMod=1.5
-
-            opowMod = powerRatios[opower]
 
             if caught<=30:
                 dexMod=0
@@ -74,42 +83,41 @@ class MiCalculadora(QtGui.QDialog):
                     dexMod=dexMod-0.5
 
 
-            x = (((3*fullHP-2*curHP)*poke.getRatio()*ballMod)/(3*fullHP))*statMod*opowMod
+            x = (((3*fullHP-2*curHP)*poke.getRatio()*ballMod)/(3*fullHP))*statMod
 
 
             if x>=255:
-                self.ui.resultTextBox.setText("Capture will succeed - 100%")
+                self.ui.textBrowser.setText("Capture will succeed - 100%")
             else:
 
                 critProb = ((min((255,x))*dexMod)/6)/256
 
-                normalCapProb = math.pow(x,(12/16))/63.8124
+                normalCapProb = math.pow(x/255,0.75)
 
                 resultString = "Normal capture probability of success is: "+str("%.4f"% (normalCapProb*100))+"%."+"\n"+"\n"
 
                 if critProb>0:
 
-                    critCapProb = math.pow(x,(3/16))/2.8263
+                    critCapProb = math.pow(x/255,(3/16))
                     totalProb = (critProb*critCapProb)+((1-critProb)*normalCapProb)
 
                     resultString = "Probability of critical capture: "+str("%.4f" % (critProb*100))+"%."+"\n"+\
                                    "\n"+"If critical capture, probability of success is: "+str("%.4f" % (critCapProb*100)) +"%.\n"+\
                                    "\n"+resultString+"Which makes a total probability of : "+str("%.4f" % (totalProb*100)) +"%."
 
-                self.ui.resultTextBox.setText(resultString)
+                self.ui.textBrowser.setText(resultString)
 
         except ValueError as err:
-            self.ui.resultTextBox.setText("A field was left blank. Please fill every field."+"\n"+"\n"+str(err))
+            self.ui.textBrowser.setText("A field was left blank. Please fill every field."+"\n"+"\n"+str(err))
         except AttributeError as err:
-            self.ui.resultTextBox.setText("No pokémon exists with that name, or maybe you entered a strange character in a field."+"\n"+"\n"+
+            self.ui.textBrowser.setText("No pokémon exists with that name, or maybe you entered a strange character in a field."+"\n"+"\n"+
                                           "Please check again every field before pressing the Calculate button")
 
 
 
 if __name__=="__main__":
-    d = PokemonDictionary("dataDictionary")
     app = QtGui.QApplication(sys.argv)
-    myapp = MiCalculadora()
+    myapp = MiCalculadora(dict=PokemonDictionary("dataDictionary"))
     myapp.show()
     sys.exit(app.exec_())
 
