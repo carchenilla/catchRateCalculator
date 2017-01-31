@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/catchRatioCalculator.iml" filepath="$PROJECT_DIR$/.idea/catchRatioCalculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/../componentPriceTracker/.idea/componentPriceTracker.iml" filepath="$PROJECT_DIR$/../componentPriceTracker/.idea/componentPriceTracker.iml" />
       <module fileurl="file://$PROJECT_DIR$/../gui_test/.idea/gui_test.iml" filepath="$PROJECT_DIR$/../gui_test/.idea/gui_test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../pruebaDelRuso/.idea/pruebaDelRuso.iml" filepath="$PROJECT_DIR$/../pruebaDelRuso/.idea/pruebaDelRuso.iml" />
     </modules>
   </component>
 </project>
