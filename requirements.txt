@@ -2,4 +2,4 @@ beautifulsoup4==4.6.3
 pkg-resources==0.0.0
 PyQt5==5.11.3
 PyQt5-sip==4.19.13
-sip==4.19.12
+sip==4.19.8
