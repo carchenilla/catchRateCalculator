@@ -8,16 +8,16 @@ statusRatios = {"Dormido": 2, "Congelado": 2, "Ninguno": 1}
 
 caughtRatios = [0.5,1,1.5,2,2.5]
 
-class MiCalculadora(QtGui.QDialog):
+class MiCalculadora(QDialog):
     def __init__(self, dict, parent=None):
         self.d = dict
-        QtGui.QWidget.__init__(self,parent)
+        QWidget.__init__(self, parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         names = sorted([str(p.getName()) for p in self.d.getPokemonDictionary().values()])
         self.ui.pokemon_Name_box.addItems(names)
-        QtCore.QObject.connect(self.ui.calculateButton, QtCore.SIGNAL("clicked()"), self.calculateRatio)
-
+        self.ui.calculateButton.clicked.connect(self.calculateRatio)
+        self.ui.calculateButton.clicked.connect(self.calculateRatio)
 
     def calculateRatio(self):
         try:
@@ -46,7 +46,7 @@ class MiCalculadora(QtGui.QDialog):
 
 
             try:
-                pixmap = QtGui.QPixmap("images/minisprites/"+str(poke.getNumber())+".png")
+                pixmap = QPixmap("images/minisprites/"+str(poke.getNumber())+".png")
                 self.ui.spriteLabel.setPixmap(pixmap)
                 self.ui.spriteLabel.setMask(pixmap.mask())
             except IOError as err:
@@ -116,7 +116,7 @@ class MiCalculadora(QtGui.QDialog):
 
 
 if __name__=="__main__":
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     myapp = MiCalculadora(dict=PokemonDictionary("dataDictionary"))
     myapp.show()
     sys.exit(app.exec_())
